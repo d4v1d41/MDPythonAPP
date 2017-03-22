@@ -461,7 +461,7 @@ NavigationLayout:
                                     on_release: app.loadingp4(expp4.text,aexpp4.text,dexpp4.text,mexpp4.text,anxpp4.text);expp4.text="";aexpp4.text="";dexpp4.text="";mexpp4.text="";anxpp4.text=""
             Screen:
                 name: 'nav_drawer'
-                HackedDemoNavDrawer:
+                NavDrawerH:
                     # NavigationDrawerToolbar:
                     #     title: "Navigation Drawer Widgets"
                     NavigationDrawerIconButton:
@@ -503,7 +503,7 @@ diana=''
 mesna=''
 ani= ''
 
-class HackedDemoNavDrawer(MDNavigationDrawer):
+class NavDrawerH(MDNavigationDrawer):
     # DO NOT USE
     def add_widget(self, widget, index=0):
         if issubclass(widget.__class__, BaseListItem):
@@ -518,7 +518,7 @@ class HackedDemoNavDrawer(MDNavigationDrawer):
         else:
             super(MDNavigationDrawer, self).add_widget(widget, index)
 
-class KitchenSink(App):
+class MigracionesP(App):
     theme_cls = ThemeManager()
     previous_date = ObjectProperty()
     title = "Migraciones Argentina"
@@ -895,4 +895,4 @@ class IconRightSampleWidget(IRightBodyTouch, MDCheckbox):
 
 
 if __name__ == '__main__':
-    KitchenSink().run()
+    MigracionesP().run()
