@@ -22,7 +22,6 @@ from kivy.core.window import Window
 from plyer import vibrator
 
 Window.softinput_mode = 'below_target'
-
 name1= str()
 sr= str()
 def datascrape(exp, anioexp, dia, mes, anio):
@@ -42,26 +41,31 @@ def datascrape(exp, anioexp, dia, mes, anio):
     sr = str(data.read())
     # analyze for getting name of user
     nam0 = ''.join(sr)
-    nam0 = nam0[nam0.index('nombre"'):nam0.index('tipo_tramite')]
-    nam0 = nam0[nam0.index('value="'):nam0.index('">')]
-    nam0= nam0[7::]
-    # analyze for getting last name of user
-    nam = ''.join(sr)
-    nam = nam[nam.index('name="apellido"'):nam.index('tipo_tramite'):]
-    nam = nam[nam.index('value="'):nam.index('">'):]
-    nam= nam[7::]
-    # getting status and depuring
-    sr = sr[sr.index('estado" value="'):sr.index('<input type="hidden" name="delegacion"'):]
-    k=[sr]
-    k= [i.replace('estado" value="', '') for i in k]
-    k= [i.replace('">','') for i in k]
-    k=map(lambda s: s.strip(), k)
-    global sr
-    sr= (k[0]).decode('iso-8859-1').strip()
-    # same here, setting up nam1 as global variable, replacing the before-declared global value, that is...
-    # formatting the name to get the complete one
-    global name1
-    name1 = (nam0 + " " + nam).decode('iso-8859-1')
+    try:
+        nam0 = nam0[nam0.index('nombre"'):nam0.index('tipo_tramite')]
+        nam0 = nam0[nam0.index('value="'):nam0.index('">')]
+        nam0= nam0[7::]
+        # analyze for getting last name of user
+        nam = ''.join(sr)
+        nam = nam[nam.index('name="apellido"'):nam.index('tipo_tramite'):]
+        nam = nam[nam.index('value="'):nam.index('">'):]
+        nam= nam[7::]
+        # getting status and depuring
+        sr = sr[sr.index('estado" value="'):sr.index('<input type="hidden" name="delegacion"'):]
+        k=[sr]
+        k= [i.replace('estado" value="', '') for i in k]
+        k= [i.replace('">','') for i in k]
+        k=map(lambda s: s.strip(), k)
+        global sr
+        sr = (k[0]).decode('iso-8859-1').strip()
+        # same here, setting up nam1 as global variable, replacing the before-declared global value, that is...
+        # formatting the name to get the complete one
+        global name1
+        name1 = (nam0 + " " + nam).decode('iso-8859-1')
+    except ValueError:
+        name1 = '-. error, verifique los datos'
+        sr= 'Datos incorrectos'
+        pass
 
 main_widget_kv = '''
 #:import Toolbar kivymd.toolbar.Toolbar
@@ -867,12 +871,7 @@ class MigracionesP(App):
         # &&&&&&&&&& FIN PERFIL 4 %%%%%%%%%%
 
 
-
-        # SHIT ____________________________>
-
-
-
-    # SHIT ____________________________>
+# Generic Functions
 
 
     def on_pause(self):
